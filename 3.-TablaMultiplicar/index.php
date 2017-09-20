@@ -17,7 +17,7 @@ and open the template in the editor.
         </form>
         <form method="POST" action="rango.php">
             <label>Introduce numeros separados por comas ',' o rangos separados por guion '-' </label> 
-            <input type="text" size="1" name="numero">
+            <input type="text" size="10" name="rango">
             <input type="submit" value="Genera Tablas" name="tablas">
         </form>
     </body>
