@@ -5,71 +5,84 @@
     
     $cantidad = $_POST['cantidad'];
     $divisas = $_POST['divisa'];
-    $divisaOrigen = $divisas['divisaOrigen'];
-    $divisaDestino = $divisas['divisaDestino'];
+    $divisaOrigen = $divisas['monedaOrigen'];
+    $divisaDestino = $divisas['monedaDestino'];
     $euro=1;
     $dolar=1.122;
     $libra=0.865;
     $yuan=7.485;
     
     switch ($divisaOrigen) {
-    case 'E':
+    case "Euro":
         switch ($divisaDestino) {
-            case 'D':
+            case "Dolar":
                 $resultado = $cantidad*$dolar;
                     break;
-            case 'L':
+            case "Libra":
                 $resultado = $cantidad*$libra;
                     break;
-            case 'Y':
+            case "Yuan":
                 $resultado = $cantidad*$yuan;
                     break;    
             default:
                 $resultado = $cantidad;
-                break;
-            break;
-    case 'D':
+                break;        
+        }
+        break;
+    case "Dolar":
         switch ($divisaDestino) {
-            case 'E':
+            case "Euro":
                 $resultado = (1/$dolar)*$cantidad;
                     break;
-            case 'L':
+            case "Libra":
                 $resultado = ((1/$dolar)*$libra)*$cantidad;
                     break;
-            case 'Y':
+            case "Yuan":
                 $resultado = ((1/$dolar)*$yuan)*$cantidad;
                     break;    
             default:
+                $resultado = $cantidad;
                 break;
-            break;
-    case 'L':
+            
+        }
+        break;
+    case "Libra":
         switch ($divisaDestino) {
-            case 'E':
+            case "Euro":
                  $resultado = (1/$libra)*$cantidad;
                     break;
-            case 'D':
+            case "Dolar":
+                $resultado = ((1/$libra)*$dolar)*$cantidad;
                     break;
-            case 'Y':
+            case "Yuan":
+                $resultado = ((1/$libra)*$yuan)*$cantidad;
                     break;    
             default:
+                $resultado = $cantidad;
                 break;
-            break;
-    case 'Y':
+        }
+        break;
+    case "Yuan":
         switch ($divisaDestino) {
-            case 'E':
+            case "Euro":
                 $resultado = (1/$yuan)*$cantidad;
                     break;
-            case 'L':
+            case "Libra":
+                $resultado = ((1/$yuan)*$libra)*$cantidad;
                     break;
-            case 'D':
+            case "Dolar":
+                $resultado = ((1/$yuan)*$dolar)*$cantidad;
                     break;    
             default:
+                $resultado = $cantidad;
                 break;
-            break;    
+        }
+        break;
     default:
+        $resultado = $cantidad;
         break;
     }
-}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,7 +92,20 @@
     </head>
     <body>
         <?php
-        
+        echo "<table border='1'>";
+        echo "<tr>";
+        echo "<td>Cantidad</td>";
+        echo "<td>Divisa Origen</td>";
+        echo "<td>Divisa Destino</td>";
+        echo "<td>Cantidad</td>";
+        echo "</tr>";
+        echo "<tr>";
+        echo "<td>".$cantidad."</td>";
+        echo "<td>".$divisaOrigen."</td>";
+        echo "<td>".$divisaDestino."</td>";
+        echo "<td>".$resultado."</td>";
+        echo "</tr>";        
+        echo "</table>";    
         ?>
     </body>
 </html>

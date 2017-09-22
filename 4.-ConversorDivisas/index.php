@@ -16,19 +16,19 @@ and open the template in the editor.
             <br>
             <label>Inserte divisa Origen</label>
             <select name="divisa[monedaOrigen]">
-                <option value="E">Euro</option>
-                <option value="D">Dolar</option>
-                <option value="L">Libra</option>
-                <option value="Y">Yuan</option>
+                <option value="Euro">Euro</option>
+                <option value="Dolar">Dolar</option>
+                <option value="Libra">Libra</option>
+                <option value="Yuan">Yuan</option>
             </select>
             <br>
             <br>
             <label>Inserte divisa Destino</label>
             <select name="divisa[monedaDestino]">
-                <option value="E">Euro</option>
-                <option value="D">Dolar</option>
-                <option value="L">Libra</option>
-                <option value="Y">Yuan</option>
+                <option value="Euro">Euro</option>
+                <option value="Dolar">Dolar</option>
+                <option value="Libra">Libra</option>
+                <option value="Yuan">Yuan</option>
             </select>
             <input type="submit" valor="calcula" name="calcula">
         </form>
