@@ -22,6 +22,10 @@ sort($numeros);
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <style type="text/css">
+            .bg1 { background-color:#BDC3C7;}
+            .bg2 { background-color:#FFFFFF;}
+        </style>
     </head>
     <body>
         <?php      
@@ -29,11 +33,11 @@ sort($numeros);
             echo "<table border='1'>";
             for($multi = 1;$multi<=9;$multi++){
                 echo "<tr>";
-                echo "<td>".$value."</td>";
-                echo "<td> X </td>";
-                echo "<td>".$multi."</td>";
-                echo "<td> = </td>";
-                echo "<td>".$multi*$value."</td>";
+                echo "<td class=bg1>".$value."</td>";
+                echo "<td class=bg2> X </td>";
+                echo "<td class=bg1>".$multi."</td>";
+                echo "<td class=bg2> = </td>";
+                echo "<td class=bg1>".$multi*$value."</td>";
                 echo "<tr>";
             }
             echo "<table>";
