@@ -1,16 +1,16 @@
 <?php
 
-if(!isset($_POST['confirmar'])){
+if(!filter_input(INPUT_POST, 'confirmar')){
     header('Location: http://localhost:8000');
 }
 
 $numero=$_POST['numero'];
 function is_primo($numero){ 
     $primo = true;
-    $divisor = round($numero/2, 0, PHP_ROUND_HALF_UP); 
+    $divisor = round($numero/2, 0, PHP_ROUND_HALF_UP);//Divido entre dos y redondeo hacia arriba.
     while($primo && $divisor>1){
-        if(!($numero%$divisor)){
-           $primo=false; 
+        if(!($numero%$divisor)){//Si algun divisisor al dividir da cero en el resto.
+           $primo=false; //El numero no es primo.
         }
         $divisor--;
     }
