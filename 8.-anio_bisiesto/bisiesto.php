@@ -1,5 +1,5 @@
 <?php
-if(!isset($_POST['confirmar'])){
+if(!filter_input(INPUT_POST, 'confirmar')){
     header('Location: http://localhost:8000');
 }
 
