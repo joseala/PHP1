@@ -25,6 +25,7 @@ if(empty($_POST)){
     $numero = $_POST['numero'];
     $aleatorio = $_POST['aleatorio'];   
     $resultado = compara($numero,$aleatorio);
+    
     if($resultado){
         include 'vista_nuevo_intento.php';
     }else{
