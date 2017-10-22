@@ -1,6 +1,6 @@
 <?php
 
-function is_victoria($tablero, $fila, $columna, $jugada){
+function is_victoria($tablero, $fila, $arrayColumna, $jugada){
     $string_fila= "";
     for($x=0;$x<7;$x++){
         if(isset($fila[$x])){
@@ -8,12 +8,11 @@ function is_victoria($tablero, $fila, $columna, $jugada){
         }else{
             $string_fila = $string_fila.".";           
         }
-    }
-    
+    }   
     $string_columna= "";
     for($x=0;$x<7;$x++){
-        if(isset($columna[$x])){
-            $string_columna = $string_columna.$columna[$x];
+        if(isset($arrayColumna[$x])){
+            $string_columna = $string_columna.$arrayColumna[$x];
         }else{
             $string_columna = $string_columna.".";           
         }
@@ -48,13 +47,18 @@ function trans_dch($tablero, $jugada){
     return $string;
 }
 function trans_izq($tablero, $jugada){
-    $mas = 6 - $jugada['x'];
-    $x = range($jugada['y'] + $mas, $jugada['x'] + $mas);
-    $y = $x;
+    $and = 6 - $jugada['x'];
+    $mas = $jugada['y']-$jugada['x'] ;
+    ($mas < 0)? $mas = 0 : $mas = $mas;
+    $mas2 = $jugada['x']-$jugada['y'] ;
+    ($mas2 < 0)? $mas2 = 0 : $mas2 = $mas2;
+    
+    $x = array_reverse(range(0 + $mas2, $jugada['x']+ $and));
+    $y = array_reverse(range( 0 + $mas, $jugada['y']+ $and));
     $a = count($y);
     
     for($z= $a-1;$z>=0;$z--) {
-        $array[$y[$z]] = $x[$z];
+        $array[$x[$z]] = $y[$z];
     }
     
     $string = "";
@@ -102,8 +106,8 @@ if(empty($_POST) || isset($_POST['volver'])){
         include 'vistas/vista_tablero.php';
     }else{
         for($fila = 6; $fila >= 0; $fila--){
-            if(!isset($tablero[$fila][$columna])){
-                $tablero[$fila][$columna] = "X";
+            if(!isset($tablero[$fila][(int)$columna])){
+                $tablero[$fila][(int)$columna] = "X";
                 break;
             }
         }

@@ -13,6 +13,12 @@ and open the template in the editor.
                 position: absolute;
                 left: 500px;
             }
+            .azul{
+                background-color: #0101DF;
+            }
+            .rojo{
+                background-color: #DF013A;
+            }
         </style>
     </head>
     <body>
@@ -26,7 +32,7 @@ and open the template in the editor.
                 <table border="1">
                     <tr>
                 <?php for ($z = 1; $z <= 7; $z++) { ?>               
-                        <th width="40" height="40">
+                        <th width="75" height="40">
                             <?= $z; ?>
                         </th>         
                 <?php } ?> 
@@ -36,11 +42,11 @@ and open the template in the editor.
                <?php for ($y = 0; $y <7; $y++) { ?>                 
                     <?php
                     if(isset($tablero[$x][$y])){ ?>
-                        <td width="65" height="40">
+                        <td width="75" height="40">
                             <?= $tablero[$x][$y]; ?>
                         </td>
                <?php }else{ ?>
-                        <td width="65" height="40">
+                        <td width="75" height="40">
                        
                         </td>                       
                <?php }

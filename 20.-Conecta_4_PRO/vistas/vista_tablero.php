@@ -33,7 +33,7 @@ and open the template in the editor.
                 <table border="1">
                     <tr>
                 <?php for ($z = 1; $z <= 7; $z++) { ?>               
-                        <th width="40" height="40">
+                        <th width="75" height="40">
                             <?= $z; ?>
                         </th>         
                 <?php } ?> 
