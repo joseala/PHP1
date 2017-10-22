@@ -47,20 +47,19 @@ function trans_dch($tablero, $jugada){
     return $string;
 }
 function trans_izq($tablero, $jugada){
-    $and = 6 - $jugada['x'];
+    $total = 6 - $jugada['x'];
     $mas = $jugada['y']-$jugada['x'] ;
     ($mas < 0)? $mas = 0 : $mas = $mas;
     $mas2 = $jugada['x']-$jugada['y'] ;
     ($mas2 < 0)? $mas2 = 0 : $mas2 = $mas2;
     
-    $x = array_reverse(range(0 + $mas2, $jugada['x']+ $and));
-    $y = array_reverse(range( 0 + $mas, $jugada['y']+ $and));
+    $x = array_reverse(range(0 + $mas2, $jugada['x']+ $total));
+    $y = array_reverse(range( 0 + $mas, $jugada['y']+ $total));
     $a = count($y);
     
     for($z= $a-1;$z>=0;$z--) {
         $array[$x[$z]] = $y[$z];
-    }
-    
+    }   
     $string = "";
     foreach ($array as $key => $value) {
         if(isset($tablero[$key][$value])){
