@@ -27,8 +27,8 @@ function is_victoria($tablero, $fila, $arrayColumna, $jugada){
     return $resultado;
 }
 function trans_dch($tablero, $jugada){
-    $mas = 6 - $jugada['x'];
-    $x = range($jugada['y'] - $mas, $jugada['x'] + $mas);
+    $total = 6 - $jugada['x'];//Valores de x < 6 llegar hasta el resultado,valores de y < 6 empezar desde x == 6.
+    $x = range($jugada['y'] - $total, $jugada['x'] + $total);
     $y = array_reverse($x);
     $a = count($y);
     
@@ -47,14 +47,14 @@ function trans_dch($tablero, $jugada){
     return $string;
 }
 function trans_izq($tablero, $jugada){
-    $total = 6 - $jugada['x'];
-    $mas = $jugada['y']-$jugada['x'] ;
-    ($mas < 0)? $mas = 0 : $mas = $mas;
-    $mas2 = $jugada['x']-$jugada['y'] ;
-    ($mas2 < 0)? $mas2 = 0 : $mas2 = $mas2;
+    $total = 6 - $jugada['x'];//Valores de x < 6 llegar hasta el resultado,valores de y < 6 empezar desde x == 6.
+    $inicio = $jugada['y']-$jugada['x'] ;//Resultado  y - x , $inicio negativo pone a 0,$inicio positivo inicio cuenta.
+    ($inicio < 0)? $inicio = 0 : $inicio = $inicio;//
+    $inicio2 = $jugada['x']-$jugada['y'] ;//Resultado  x - y , $inicio2 negativo pone a 0,$inicio positivo inicio cuenta.
+    ($inicio2 < 0)? $inicio2 = 0 : $inicio2 = $inicio2;
     
-    $x = array_reverse(range(0 + $mas2, $jugada['x']+ $total));
-    $y = array_reverse(range( 0 + $mas, $jugada['y']+ $total));
+    $x = array_reverse(range($inicio2, $jugada['x']+ $total));
+    $y = array_reverse(range($inicio, $jugada['y']+ $total));
     $a = count($y);
     
     for($z= $a-1;$z>=0;$z--) {
