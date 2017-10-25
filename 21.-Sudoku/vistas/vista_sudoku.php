@@ -12,14 +12,12 @@ and open the template in the editor.
     <body>
         <table border="1"> 
         <?php
-        foreach ($sudoku as $key => $fila) {
-            echo '<tr>';
-            foreach ($fila as $key => $valor) {
-                echo '<td>';
-                echo $valor;
-                echo '</td>';
-            } 
-            echo '</tr>';
+        for($x=0; $x<3;$x++){
+            for($y=0; $y<3;$z++){
+                for($z=0; $z<3;$z++){
+                    $sudoku[$x][$y][$z];
+                }
+            }
         }
         ?>
         </table>
