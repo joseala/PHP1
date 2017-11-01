@@ -4,6 +4,13 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <style type="text/css">
+            .palabras{
+               position: relative;
+                left: 500px;
+                bottom: 500px;
+            }
+        </style>
     </head>
     <body>
         <h1>Sopa de Letras</h1>
@@ -46,8 +53,8 @@
             ?>
             
             <br>
-            <label>Columna</label>
-            <select name="columna">
+            <label>Fila</label>
+            <select name="fila">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -64,8 +71,8 @@
                 <option value="13">13</option>
                 <option value="14">14</option>
             </select>
-            <label>Fila</label>
-            <select name="fila">
+            <label>Columna</label>
+            <select name="columna">
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -107,6 +114,21 @@
             </select>
             <br>
             <input type="submit" value="Resolver" name="resolver">
+            <div class="palabras">
+
+                <h2>Busca estas palabras</h2>
+                <table border="1" cellspacing="2">
+                    <tr>
+                 <?php foreach ($palabras_elegidas as $x => $palabra) {?>                 
+                        <td>
+                            <?= $palabra; ?>
+                        </td>
+                <?php 
+                        echo "<input type='hidden' value='$palabra' name='palabras[$x]' >";  
+                 } ?>
+                    </tr>
+                </table>
+            </div>
         </form>
         <?php
      
