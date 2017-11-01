@@ -20,16 +20,19 @@ function pisaPalabra($tablero,$col,$fil,$tam){
     }   
     return $pisado;    
 }
-function introducePalabra($tablero,$col,$fil,$palabra){
+function introducePalabra($tablero,$col,$fil,$palabra,$tamanio){
     $array_palabra = str_split($palabra);
     $sentido = rand(0, 1);
     ($sentido)? $array_palabra = array_reverse($array_palabra) : $array_palabra = $array_palabra;//Se da un sentido u otro.
     $direccion= rand(0, 1);
-    if($direccion){
-        array_splice($tablero[$col], $fil, $fil+(count($array_palabra)-1),$array_palabra);//fallo
+    $array_palabra[] = "";
+    if($direccion){    
+        
+        array_splice($tablero[$col], $fil,($tamanio+1) ,$array_palabra);//fallo
         $tablero = array_map(null, ...$tablero);       
     }else{
-        array_splice($tablero[$col], $fil, $fil+(count($array_palabra)-1),$array_palabra);//fallo
+
+        array_splice($tablero[$col], $fil, ($tamanio+1),$array_palabra);//fallo
     }   
     return $tablero;
 }
@@ -47,7 +50,7 @@ function colocaPalabras($sopa_de_letras,$elegidas,$alto,$ancho){
             $col = rand($min_col, $max_col);
             $fil = rand($min_fil, $max_fil);
             if(!pisaPalabra($sopa_de_letras,$col,$fil,$tamanio)){
-                $sopa_de_letras = introducePalabra($sopa_de_letras,$col,$fil,$palabra);
+                $sopa_de_letras = introducePalabra($sopa_de_letras,$col,$fil,$palabra,$tamanio);
                 $colocada= true;
             }                 
         }      
@@ -63,7 +66,7 @@ function colocaletras($tablero,$ancho,$alto){
             while(!$colocada){               
                 if($valor != ""){
                     $colocada = true;
-                }else{
+                }else{//fallo
                     $num_letra = rand(97, 122);
                     $letra = chr($num_letra);
                     if(!$hayCinco && !is_colocable($tablero,$x,$y,$letra)){                   
@@ -106,7 +109,7 @@ function is_colocable($tablero,$fil,$col,$letra){
             }
         }       
     }   
-    return count($vocalesFil) >= 5 && count($vocalesCol) >= 5 && $colocar; 
+    return count($vocalesFil) >= 5 && count($vocalesCol) >= 5 || $colocar; 
 }
 function actualizar($tablero,$fila,$columna,$direccion,$tam,&$palabras){
             $encontrada = false;

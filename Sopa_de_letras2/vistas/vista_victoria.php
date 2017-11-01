@@ -17,24 +17,16 @@
                 <?php } ?>
                 </th>
                 
-                <?php for($x=0;$x<=14;$x++) { ?>
+                <?php foreach ($sopa_de_letras as $x => $array_fila) { ?>
                     <tr>
                         <td width="20" height="20">
                             <?= $x; ?>
                         </td>
-                    <?php for($y=0;$y<=14;$y++) { ?>
+                    <?php foreach ($array_fila as $y => $valor) { ?>
                         <td>
                             <?php
-                            $valor = $sopa_de_letras[$x][$y];
-                            if(isset($valor['letra'])){
-                                echo $valor['letra'];
-                                echo "<input type='hidden' value='".$valor['letra']."' name='sopa_de_letras[$x][$y][letra]' >";
-                                echo "<input type='hidden' value='".$valor['flag']."' name='sopa_de_letras[$x][$y][flag]' >";
-                            }else{
-                                echo $valor;
-                                echo "<input type='hidden' value='$valor' name='sopa_de_letras[$x][$y]' >";        
-                            }
-
+                            echo $valor;
+                            echo "<input type='hidden' value='$valor' name='sopa_de_letras[$x][$y]' >";        
                             ?>
                         </td>
                     <?php }?>
