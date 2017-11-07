@@ -1,38 +1,37 @@
 <?php
-function pisaPalabra($tablero,$col,$fil,$tam){
+function pisaPalabra($tablero,$fil,$col,$tam){
     $pisado = false;
-    if(isset($tablero [$col-1])){
-        $fila_ant = $tablero [$col-1];
+    if(isset($tablero [$fil-1])){
+        $fila_ant = $tablero [$fil-1];
     }else{
         $fila_ant = array_fill(0, 15, "");
     }
-    if(isset($tablero [$col+1])){
-        $fila_pos = $tablero [$col+1];
+    if(isset($tablero [$fil+1])){
+        $fila_pos = $tablero [$fil+1];
     }else{
         $fila_pos = array_fill(0, 15, "");
     }  
-    $fila_act = $tablero [$col];
+    $fila_act = $tablero [$fil];
     
-    if( 1 != count(array_unique(array_slice($fila_ant,$fil-1,$fil+$tam))) ||
-        1 != count(array_unique(array_slice($fila_act,$fil-1,$fil+$tam))) ||
-        1 != count(array_unique(array_slice($fila_pos,$fil-1,$fil+$tam)))){
+    if( 1 != count(array_unique(array_slice($fila_ant,$col-1,$col+$tam))) ||
+        1 != count(array_unique(array_slice($fila_act,$col-1,$col+$tam))) ||
+        1 != count(array_unique(array_slice($fila_pos,$col-1,$col+$tam)))){
         $pisado = true;    
     }   
     return $pisado;    
 }
-function introducePalabra($tablero,$col,$fil,$palabra,$tamanio){
+function introducePalabra($tablero,$fil,$col,$palabra,$tamanio){
     $array_palabra = str_split($palabra);
     $sentido = rand(0, 1);
     ($sentido)? $array_palabra = array_reverse($array_palabra) : $array_palabra = $array_palabra;//Se da un sentido u otro.
     $direccion= rand(0, 1);
     $array_palabra[] = "";
-    if($direccion){    
-        
-        array_splice($tablero[$col], $fil,($tamanio+1) ,$array_palabra);//fallo
+    if($direccion){          
+        array_splice($tablero[$fil], $col,($tamanio+1) ,$array_palabra);//fallo
         $tablero = array_map(null, ...$tablero);       
     }else{
 
-        array_splice($tablero[$col], $fil, ($tamanio+1),$array_palabra);//fallo
+        array_splice($tablero[$fil], $col, ($tamanio+1),$array_palabra);//fallo
     }   
     return $tablero;
 }
@@ -42,15 +41,15 @@ function colocaPalabras($sopa_de_letras,$elegidas,$alto,$ancho){
         $tamanio = strlen($palabra);//Tamaño para no salir de tablero y 
         while(!$colocada){
             
-            $min_col = 0;
-            $max_col = 14; 
-            $min_fil= 0;
-            $max_fil= 14-$tamanio; 
+            $min_fil = 0;
+            $max_fil = 14; 
+            $min_col= 0;
+            $max_col= 14-$tamanio; 
             
-            $col = rand($min_col, $max_col);
             $fil = rand($min_fil, $max_fil);
-            if(!pisaPalabra($sopa_de_letras,$col,$fil,$tamanio)){
-                $sopa_de_letras = introducePalabra($sopa_de_letras,$col,$fil,$palabra,$tamanio);
+            $col = rand($min_col, $max_col);
+            if(!pisaPalabra($sopa_de_letras,$fil,$col,$tamanio)){
+                $sopa_de_letras = introducePalabra($sopa_de_letras,$fil,$col,$palabra,$tamanio);
                 $colocada= true;
             }                 
         }      
@@ -58,7 +57,8 @@ function colocaPalabras($sopa_de_letras,$elegidas,$alto,$ancho){
     return $sopa_de_letras;
 }
 function colocaletras($tablero,$ancho,$alto){
-    
+    $consonantes = "bcdfghjklmnpqrstvwxyz";
+    $array_consonantes = str_split($consonantes);
     foreach ($tablero as $x => $fil){
         $hayCinco = false;
         foreach ($fil as $y => $valor) {
@@ -69,17 +69,19 @@ function colocaletras($tablero,$ancho,$alto){
                 }else{//fallo
                     $num_letra = rand(97, 122);
                     $letra = chr($num_letra);
-                    if(!$hayCinco && !is_colocable($tablero,$x,$y,$letra)){                   
-                        $tablero[$x][$y]= $letra;
-                        $colocada = true;
-                    }else{
-                        $consonantes = "bcdfghjklmnñpqrstvwxyz";
-                        $array_consonantes = str_split($consonantes);
-                        $num_letra = rand(0, 22);                  
-                        $letra = chr($array_consonantes);
-                        $tablero[$x][$y]= $letra;
-                        $colocada = true;
+                    if(!$hayCinco && !no_colocable($tablero,$x,$y,$letra )){  
+                        if(!hayAlrededor($tablero,$x,$y,$letra)){
+                            $tablero[$x][$y]= $letra;
+                            $colocada = true;
+                        }                   
+                    }else{                    
+                        $num_letra = rand(0, 20);                  
+                        $letra = $array_consonantes[$num_letra];
                         $hayCinco = true;
+                        if(!hayAlrededor($tablero,$x,$y,$letra)){
+                            $tablero[$x][$y]= $letra;
+                            $colocada = true;                     
+                        }            
                     }
                 }
             }               
@@ -87,7 +89,7 @@ function colocaletras($tablero,$ancho,$alto){
     }
     return $tablero;
 }
-function is_colocable($tablero,$fil,$col,$letra){
+function no_colocable($tablero,$fil,$col,$letra){
    
     $array_columna = array_column($tablero, $col);
     $array_fila = $tablero[$fil];
@@ -98,6 +100,10 @@ function is_colocable($tablero,$fil,$col,$letra){
     $vocalesFil = array_filter($array_fila, function ($valor){      
         return preg_match('/^([aeiou]+)$/', $valor);      
     });
+      
+    return count($vocalesFil) >= 5 || count($vocalesCol) >= 5; 
+}
+function hayAlrededor($tablero,$fil,$col,$letra){
     $colocar = false;
     for ($x = -1; $x < 2; $x++) {
         for ($y = -1; $y < 2; $y++) { 
@@ -108,8 +114,8 @@ function is_colocable($tablero,$fil,$col,$letra){
                 }
             }
         }       
-    }   
-    return count($vocalesFil) >= 5 && count($vocalesCol) >= 5 || $colocar; 
+    }
+    return $colocar;
 }
 function actualizar($tablero,$fila,$columna,$direccion,$tam,&$palabras){
             $encontrada = false;
@@ -177,13 +183,13 @@ if(empty($_POST) || isset($_POST['volver'])){
     include 'vistas/vista_juego.php';
 }elseif (isset ($_POST['resolver'])) {
     $sopa_de_letras = $_POST['sopa_de_letras'];
-    $columna = $_POST['fila'];
-    $fila = $_POST['columna'];
+    $fila = $_POST['fila'];
+    $columna = $_POST['columna'];
     $direccion = $_POST['direccion'];
     $tam = $_POST['tam'];
     $palabras_elegidas = $_POST['palabras'];
  
-    $sopa_de_letras = actualizar($sopa_de_letras,$columna,$fila,$direccion,$tam,$palabras_elegidas);
+    $sopa_de_letras = actualizar($sopa_de_letras,$fila,$columna,$direccion,$tam,$palabras_elegidas);
    
     if(count($palabras_elegidas)){
         include 'vistas/vista_juego.php';
